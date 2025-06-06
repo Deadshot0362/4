@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WhatsApp AI Assistant</string>
+
+    <string name="accessibility_service_description">
+        This service allows WhatsApp AI Assistant to read incoming messages and automatically reply on your behalf within WhatsApp.
+        It requires access to your WhatsApp content and the ability to simulate touches to send messages.
+        Your data remains private on your device.
+    </string>
+</resources>
