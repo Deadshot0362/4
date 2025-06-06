@@ -1,12 +1,16 @@
 // lib/services/background_messaging_service.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:whatsapp_ai_assistant/api/openai_service.dart';
 import 'package:whatsapp_ai_assistant/config/app_constants.dart';
+import 'package:whatsapp_ai_assistant/core/enums/ai_personality_type.dart';
 import 'package:whatsapp_ai_assistant/core/utils/app_logger.dart';
 import 'package:whatsapp_ai_assistant/core/utils/platform_channels.dart';
+import 'package:whatsapp_ai_assistant/data/local/app_database.dart';
 import 'package:whatsapp_ai_assistant/data/repositories/conversation_repository.dart';
 import 'package:whatsapp_ai_assistant/data/repositories/message_repository.dart';
 import 'package:whatsapp_ai_assistant/data/repositories/settings_repository.dart';
+import 'package:whatsapp_ai_assistant/features/ai_settings/domain/entities/ai_personality.dart';
 
 /// This service acts as the orchestrator for background message processing.
 /// It listens for incoming WhatsApp messages, determines if they should be processed by AI,
@@ -72,12 +76,10 @@ class BackgroundMessagingService {
         final selectedPersonalityType = await settingsRepo.getSelectedAIPersonality();
         final aiPersonality = selectedPersonalityType == AIPersonalityType.custom
             ? await settingsRepo.getCustomAIPersonality()
-            : await settingsRepo.getCustomAIPersonality().then((custom) { // Use custom for default values if not found
-                return AIPersonality(
-                  type: selectedPersonalityType,
-                  prompt: AppConstants.aiPersonalityPrompts[selectedPersonalityType.toKey()]!,
-                );
-              });
+            : AIPersonality(
+                type: selectedPersonalityType,
+                prompt: AppConstants.aiPersonalityPrompts[selectedPersonalityType.toKey()]!,
+              );
 
 
         _logger.i('Generating AI response for message from "$sender" in "$chatName": "$content"');

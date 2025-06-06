@@ -9,9 +9,10 @@ import 'package:logger/logger.dart';
 import 'package:whatsapp_ai_assistant/features/chat_management/presentation/screens/chat_management_screen.dart';
 import 'package:whatsapp_ai_assistant/services/background_messaging_service.dart';
 
-final appDatabaseProvider = Provider<AppDatabase>((ref) {
-  return AppDatabase();
-});
+// Import the provider from the database file instead of redefining it
+// final appDatabaseProvider = Provider<AppDatabase>((ref) {
+//   return AppDatabase();
+// });
 
 // Global logger instance
 final loggerProvider = Provider<Logger>((ref) => AppLogger.instance);

@@ -91,4 +91,30 @@ class ConversationRepository {
       (conversations) => conversations.map((e) => ConversationEntity.fromDriftConversation(e)).toList(),
     );
   }
+
+  /// Get or create a chat conversation
+  Future<ConversationEntity> getOrCreateChat(String chatIdentifier, String chatName) async {
+    _logger.d('Getting or creating chat: $chatIdentifier');
+    try {
+      // Try to get existing conversation
+      final existing = await getConversationById(chatIdentifier);
+      if (existing != null) {
+        return existing;
+      }
+
+      // Create new conversation
+      final newConversation = ConversationEntity(
+        id: chatIdentifier,
+        name: chatName,
+        isMonitored: false, // Default to not monitored
+        lastMessageTime: DateTime.now(),
+      );
+
+      await saveConversation(newConversation);
+      return newConversation;
+    } catch (e, stack) {
+      _logger.e('Error getting or creating chat: $e', error: e, stackTrace: stack);
+      throw Exception('Failed to get or create chat: $e');
+    }
+  }
 }

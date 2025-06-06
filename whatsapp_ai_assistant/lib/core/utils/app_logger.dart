@@ -2,7 +2,7 @@
 import 'package:logger/logger.dart';
 
 class AppLogger {
-  static late Logger _logger;
+  static Logger? _logger;
 
   static void init() {
     _logger = Logger(
@@ -21,6 +21,6 @@ class AppLogger {
     if (_logger == null) {
       init(); // Ensure initialization if accessed before main.
     }
-    return _logger;
+    return _logger!;
   }
 }

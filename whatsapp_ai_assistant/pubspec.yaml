@@ -35,6 +35,15 @@ dependencies:
   flutter_riverpod: ^2.5.1 # As of June 2025, this is a recent stable version
   riverpod_annotation: ^2.3.5 # As of June 2025, this is a recent stable version
 
+  # Secure storage for sensitive data
+  flutter_secure_storage: ^9.2.2 # As of June 2025, this is a recent stable version
+
+  # HTTP client for API calls
+  http: ^1.2.1 # As of June 2025, this is a recent stable version
+
+  # UUID generation
+  uuid: ^4.4.2 # As of June 2025, this is a recent stable version
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

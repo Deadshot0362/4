@@ -4,15 +4,15 @@ import 'package:whatsapp_ai_assistant/config/app_constants.dart';
 import 'package:whatsapp_ai_assistant/core/utils/app_logger.dart';
 
 class PlatformChannels {
-  static final MethodChannel _notificationMethodChannel = MethodChannel(AppConstants.notificationChannel);
-  static final EventChannel _notificationEventChannel = EventChannel(AppConstants.notificationChannel);
-  static final MethodChannel _accessibilityMethodChannel = MethodChannel(AppConstants.accessibilityChannel);
-  static final Logger _logger = AppLogger.instance;
+  final MethodChannel _notificationMethodChannel = const MethodChannel(AppConstants.notificationChannel);
+  final EventChannel _notificationEventChannel = const EventChannel(AppConstants.notificationChannel);
+  final MethodChannel _accessibilityMethodChannel = const MethodChannel(AppConstants.accessibilityChannel);
+  final Logger _logger = AppLogger.instance;
 
   // --- Notification Listener Service ---
 
   /// Starts listening for WhatsApp notifications.
-  static Future<void> startNotificationListener() async {
+  Future<void> startNotificationListener() async {
     try {
       await _notificationMethodChannel.invokeMethod('startNotificationListener');
       _logger.i('Notification listener started via platform channel.');
@@ -22,7 +22,7 @@ class PlatformChannels {
   }
 
   /// Stops listening for WhatsApp notifications.
-  static Future<void> stopNotificationListener() async {
+  Future<void> stopNotificationListener() async {
     try {
       await _notificationMethodChannel.invokeMethod('stopNotificationListener');
       _logger.i('Notification listener stopped via platform channel.');
@@ -52,7 +52,7 @@ class PlatformChannels {
   /// Sends a message using the Accessibility Service.
   /// chatName: The name of the WhatsApp chat (e.g., contact name or group name).
   /// message: The message text to send.
-  static Future<bool> sendMessageViaAccessibility(String chatName, String message) async {
+  Future<bool> sendMessageViaAccessibility(String chatName, String message) async {
     try {
       final bool? success = await _accessibilityMethodChannel.invokeMethod('sendMessage', {
         'chatName': chatName,
@@ -67,7 +67,7 @@ class PlatformChannels {
   }
   
   /// Opens a specific WhatsApp chat using the Accessibility Service.
-  static Future<bool> openWhatsAppChat(String chatName) async {
+  Future<bool> openWhatsAppChat(String chatName) async {
     try {
       final bool? success = await _accessibilityMethodChannel.invokeMethod('openWhatsAppChat', {
         'chatName': chatName,
