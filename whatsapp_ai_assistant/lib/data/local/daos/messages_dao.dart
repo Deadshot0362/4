@@ -35,4 +35,22 @@ class MessagesDao extends DatabaseAccessor<AppDatabase> with _$MessagesDaoMixin 
     _logger.d('Watching messages for conversation ID: $conversationId');
     return (select(messages)..where((tbl) => tbl.conversationId.equals(conversationId))).watch();
   }
+
+  Future<List<Message>> getMessagesForConversation(String conversationId, {int limit = 10, int offset = 0}) {
+    _logger.d('Fetching messages for conversation ID: $conversationId (limit: $limit, offset: $offset)');
+    return (select(messages)
+      ..where((tbl) => tbl.conversationId.equals(conversationId))
+      ..orderBy([(tbl) => OrderingTerm.desc(tbl.timestamp)])
+      ..limit(limit, offset: offset))
+        .get();
+  }
+
+  Future<List<Message>> getRecentMessagesForConversation(String conversationId, int limit) {
+    _logger.d('Fetching recent messages for conversation ID: $conversationId (limit: $limit)');
+    return (select(messages)
+      ..where((tbl) => tbl.conversationId.equals(conversationId))
+      ..orderBy([(tbl) => OrderingTerm.desc(tbl.timestamp)])
+      ..limit(limit))
+        .get();
+  }
 }
